@@ -22,7 +22,10 @@ class FakeTextDataGenerator(object):
         cls.generate(*t)
 
     @classmethod
-    def generate(cls, index, text, font, out_dir, size, extension, skewing_angle, random_skew, blur, random_blur, background_type, distorsion_type, distorsion_orientation, is_handwritten, name_format, width, alignment, text_color, orientation, space_width, margins, fit):
+    def generate(cls, index, text, font, out_dir, size, extension, 
+    skewing_angle, random_skew, blur, random_blur, background_type, distorsion_type, distorsion_orientation, 
+    is_handwritten, name_format, width, alignment, text_color, orientation, 
+    space_width, margins, fit):
         image = None
 
         margin_top, margin_left, margin_bottom, margin_right = margins
@@ -130,6 +133,8 @@ class FakeTextDataGenerator(object):
             image_name = '{}_{}.{}'.format(str(index), text, extension)
         elif name_format == 2:
             image_name = '{}.{}'.format(str(index),extension)
+        elif name_format == 3:
+            image_name = '{}_{}_{}.{}'.format(str(index),text,font,extension)
         else:
             print('{} is not a valid name format. Using default.'.format(name_format))
             image_name = '{}_{}.{}'.format(text, str(index), extension)

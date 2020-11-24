@@ -19,7 +19,7 @@ from utils import CTCLabelConverter, AttnLabelConverter, Averager
 from dataset import hierarchical_dataset, AlignCollate, Batch_Balanced_Dataset
 from model import Model
 from test import validation
-from apex.parallel import DistributedDataParallel as DDP
+# from apex.parallel import DistributedDataParallel as DDP
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 def train(opt):
@@ -69,7 +69,7 @@ def train(opt):
     # data parallel for multi-GPU
     # model = torch.nn.DataParallel(model).to(device)
     model.cuda(opt.gpu)
-    model = DDP(model, delay_allreduce=True).to(device)
+    # model = DDP(model, delay_allreduce=True).to(device)
     model.train()
     if opt.continue_model != '':
         print(f'loading pretrained model from {opt.continue_model}')
@@ -285,9 +285,9 @@ if __name__ == '__main__':
     # print('device count', opt.num_gpu)
     opt.gpu = opt.local_rank
     torch.cuda.set_device(opt.gpu)
-    torch.distributed.init_process_group(backend='nccl',
-                                         init_method='env://')
-    opt.world_size = torch.distributed.get_world_size()
+    # torch.distributed.init_process_group(backend='nccl',
+    #                                      init_method='env://')
+    # opt.world_size = torch.distributed.get_world_size()
 
     if opt.num_gpu > 1:
         print('------ Use multi-GPU setting ------')
